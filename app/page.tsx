@@ -1,5 +1,5 @@
-import { LightningTalkTimerComponent } from '../components/lightning-talk-timer'
+import { TalkTimer } from '../components/talk-timer'
 
 export default function Home() {
-  return <LightningTalkTimerComponent />
+  return <TalkTimer />
 }
