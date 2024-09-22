@@ -11,6 +11,7 @@ const TimerDisplay = ({ elapsedTime, active, bgColor }: TimerProps) => {
     >
       <main className="flex-grow flex items-center justify-center">
         <h1
+          title="Elapsed Time"
           className={`text-8xl font-bold text-white transition-opacity drop-shadow-md duration-300 ${
             active ? 'opacity-100' : 'opacity-70'
           }`}
