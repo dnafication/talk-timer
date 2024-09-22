@@ -7,7 +7,7 @@ import TimerDisplay from './timer-display'
 
 export function TalkTimer() {
   const [isRunning, setIsRunning] = useState(false)
-  const [elapsedTime, setElapsedTime] = useState(3600)
+  const [elapsedTime, setElapsedTime] = useState(0)
   const [talkTitle, setTalkTitle] = useState('My Lightning Talk ⚡')
   const [yellowThreshold, setYellowThreshold] = useState(90) // 1 and half minute
   const [redThreshold, setRedThreshold] = useState(120) // 2 minutes
