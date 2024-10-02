@@ -1,79 +1,103 @@
-'use client'
+"use client";
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from "react";
 
-import Footer from './footer'
-import TimerDisplay from './timer-display'
+import Footer from "./footer";
+import TimerDisplay from "./timer-display";
 
 export function TalkTimer() {
-  const [isRunning, setIsRunning] = useState(false)
-  const [elapsedTime, setElapsedTime] = useState(0)
-  const [talkTitle, setTalkTitle] = useState('My Lightning Talk ⚡')
-  const [yellowThreshold, setYellowThreshold] = useState(90) // 1 and half minute
-  const [redThreshold, setRedThreshold] = useState(120) // 2 minutes
-  const [active, setActive] = useState(false)
+  const [isRunning, setIsRunning] = useState(false);
+  const [elapsedTime, setElapsedTime] = useState(0);
+  const [talkTitle, setTalkTitle] = useState("My Lightning Talk ⚡");
+  const [yellowThreshold, setYellowThreshold] = useState(90); // 1 and half minute
+  const [redThreshold, setRedThreshold] = useState(120); // 2 minutes
+  const [active, setActive] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   const getBackgroundColor = useCallback(() => {
     if (elapsedTime < yellowThreshold) {
-      return 'bg-gradient-to-br from-green-300 to-green-600'
+      return "bg-gradient-to-br from-green-300 to-green-600";
     } else if (elapsedTime < redThreshold) {
-      return 'bg-gradient-to-br from-yellow-400 to-yellow-600'
+      return "bg-gradient-to-br from-yellow-400 to-yellow-600";
     } else {
-      return 'bg-gradient-to-br from-red-400 to-red-600'
+      return "bg-gradient-to-br from-red-400 to-red-600";
     }
-  }, [elapsedTime, yellowThreshold, redThreshold])
+  }, [elapsedTime, yellowThreshold, redThreshold]);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout
+    let interval: NodeJS.Timeout;
     if (isRunning) {
       interval = setInterval(() => {
-        setElapsedTime((prevTime) => prevTime + 1)
-      }, 1000)
+        setElapsedTime((prevTime) => prevTime + 1);
+      }, 1000);
     }
-    return () => clearInterval(interval)
-  }, [isRunning])
+    return () => clearInterval(interval);
+  }, [isRunning]);
 
-  const hideAfter = 3000
+  const hideAfter = 3000;
 
   useEffect(() => {
-    let timeout: NodeJS.Timeout
+    let timeout: NodeJS.Timeout;
     const handleMouseMove = () => {
-      setActive(true)
-      clearTimeout(timeout)
+      setActive(true);
+      clearTimeout(timeout);
       timeout = setTimeout(() => {
-        setActive(false)
-      }, hideAfter)
-    }
+        setActive(false);
+      }, hideAfter);
+    };
 
-    window.addEventListener('mousemove', handleMouseMove)
-    handleMouseMove() // Initial call to start the timeout
+    window.addEventListener("mousemove", handleMouseMove);
+    handleMouseMove(); // Initial call to start the timeout
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove)
-      clearTimeout(timeout)
-    }
-  }, [])
+      window.removeEventListener("mousemove", handleMouseMove);
+      clearTimeout(timeout);
+    };
+  }, []);
 
   useEffect(() => {
     if (elapsedTime > 0) {
-      document.title = `Elapsed - ${formatTime(elapsedTime)}`
+      document.title = `Elapsed - ${formatTime(elapsedTime)}`;
     }
-  })
+  });
 
-  const toggleTimer = () => setIsRunning(!isRunning)
+  const toggleTimer = () => setIsRunning(!isRunning);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else if (document.exitFullscreen) {
+      document.exitFullscreen();
+    }
+    setIsFullscreen(!isFullscreen);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "f" || event.key === "F") {
+        toggleFullscreen();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isFullscreen]);
 
   const resetTimer = () => {
-    setIsRunning(false)
-    setElapsedTime(0)
-  }
+    setIsRunning(false);
+    setElapsedTime(0);
+  };
 
   const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60)
-    const secs = seconds % 60
-    return `${mins.toString().padStart(2, '0')}:${secs
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, "0")}:${secs
       .toString()
-      .padStart(2, '0')}`
-  }
+      .padStart(2, "0")}`;
+  };
 
   return (
     <div className="relative h-screen">
@@ -93,7 +117,9 @@ export function TalkTimer() {
         setTalkTitle={setTalkTitle}
         setYellowThreshold={setYellowThreshold}
         setRedThreshold={setRedThreshold}
+        toggleFullscreen={toggleFullscreen}
+        isFullscreen={isFullscreen}
       />
     </div>
-  )
+  );
 }
