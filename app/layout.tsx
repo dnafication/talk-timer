@@ -3,11 +3,11 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Talk Timer',
-  description: 'A simple timer for lightning talks'
+  description: 'A simple timer for lightning talks',
 }
 
 export default function RootLayout({
-  children
+  children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
