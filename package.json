@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint && prettier --check '**/*.{tsx,ts,js,mjs,cjs}'",
+    "format": "prettier --write '**/*.{tsx,ts,js,mjs,cjs}'"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.1",
