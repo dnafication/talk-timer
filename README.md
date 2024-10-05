@@ -1,6 +1,6 @@
 # Talk Timer
 
-A simple timer for talks, with configurable time for warning and end of talk.
+A simple timer for talks, with configurable time for warning and end of talk with full screen functionality added, use key F/f to make the timer full screen or exit full screen.
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app). It uses [shadcn/ui](https://ui.shadcn.com/) for the UI components.
 

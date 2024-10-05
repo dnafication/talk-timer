@@ -1,27 +1,36 @@
-import { Button } from '@/components/ui/button'
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Pause, Play, Settings, TimerReset } from 'lucide-react'
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Pause,
+  Play,
+  Settings,
+  TimerReset,
+  Maximize2,
+  Minimize2,
+} from "lucide-react";
 
 type FooterProps = {
-  active: boolean
-  isRunning: boolean
-  talkTitle: string
-  yellowThreshold: number
-  redThreshold: number
-  toggleTimer: () => void
-  resetTimer: () => void
-  setTalkTitle: (title: string) => void
-  setYellowThreshold: (threshold: number) => void
-  setRedThreshold: (threshold: number) => void
-}
+  active: boolean;
+  isRunning: boolean;
+  talkTitle: string;
+  yellowThreshold: number;
+  redThreshold: number;
+  toggleTimer: () => void;
+  resetTimer: () => void;
+  setTalkTitle: (title: string) => void;
+  setYellowThreshold: (threshold: number) => void;
+  setRedThreshold: (threshold: number) => void;
+  toggleFullscreen: () => void;
+  isFullscreen: boolean;
+};
 
 const Footer = ({
   active,
@@ -34,18 +43,20 @@ const Footer = ({
   setTalkTitle,
   setYellowThreshold,
   setRedThreshold,
+  toggleFullscreen,
+  isFullscreen,
 }: FooterProps) => {
   return (
     <footer
       className={`absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white px-5 py-4 flex justify-between items-center transition-opacity duration-300 ${
-        active ? 'opacity-100' : 'opacity-0'
+        active ? "opacity-100" : "opacity-100"
       }`}
     >
       <div className="flex items-center space-x-4">
         <Button
           onClick={toggleTimer}
           variant="outline"
-          title={isRunning ? 'Pause Timer' : 'Start Timer'}
+          title={isRunning ? "Pause Timer" : "Start Timer"}
         >
           {isRunning ? (
             <Pause className="h-4 w-4" strokeWidth={3} />
@@ -62,12 +73,27 @@ const Footer = ({
           {talkTitle}
         </h2>
       </div>
+
       <Dialog>
-        <DialogTrigger asChild>
-          <Button variant="outline" size="icon" title="Settings">
-            <Settings className="h-4 w-4" strokeWidth={3} />
+        <div className="flex flex-row space-x-4">
+          <Button
+            onClick={toggleFullscreen}
+            variant="outline"
+            // size="fullscreenIcon"
+            title={isFullscreen ? "Minimize" : "Maximize"}
+          >
+            {isFullscreen ? (
+              <Minimize2 className="h-4 w-4" strokeWidth={3} />
+            ) : (
+              <Maximize2 className="h-4 w-4" strokeWidth={3} />
+            )}
           </Button>
-        </DialogTrigger>
+          <DialogTrigger asChild>
+            <Button variant="outline" size="icon" title="Settings">
+              <Settings className="h-4 w-4" strokeWidth={3} />
+            </Button>
+          </DialogTrigger>
+        </div>
         <DialogContent className="">
           <DialogHeader>
             <DialogTitle>Timer Settings</DialogTitle>
@@ -113,7 +139,7 @@ const Footer = ({
             </div>
             <div className="text-xs text-center">
               <p>
-                Built with{' '}
+                Built with{" "}
                 <a
                   href="https://nextjs.org"
                   target="_blank"
@@ -122,7 +148,7 @@ const Footer = ({
                 >
                   Next.js
                 </a>
-                ,{' '}
+                ,{" "}
                 <a
                   href="https://react.dev/"
                   target="_blank"
@@ -131,7 +157,7 @@ const Footer = ({
                 >
                   React
                 </a>
-                ,{' '}
+                ,{" "}
                 <a
                   href="https://tailwindcss.com"
                   target="_blank"
@@ -140,7 +166,7 @@ const Footer = ({
                 >
                   Tailwind
                 </a>
-                , and{' '}
+                , and{" "}
                 <a
                   href="https://ui.shadcn.com"
                   target="_blank"
@@ -173,7 +199,7 @@ const Footer = ({
         </DialogContent>
       </Dialog>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;
