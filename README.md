@@ -1,5 +1,5 @@
 <p align="center">
-  <h1>Talk timer</h1>
+  <h1 align="center">TALK TIMER</h1>
 </p>
 
 <h1 align="center">A simple timer for talks, with configurable time for warning and end of talk.</h1>
@@ -8,9 +8,9 @@
   <img src="./docs/Images/HomePage.png" alt="talktimer-home" />
 </div>
 
-<a href="#About project">
-  <h2 id="About-project">⚡️ About the Project</h2>
-</a>
+<p>
+  <h2 id="About-project" align="center">⚡️ About the Project</h2>
+</p>
 
 <div>
   <p>
@@ -32,9 +32,10 @@
   <img src="./docs/Images/Yellow.png">
 </div>
 <br />
-<a href="#tech stack">
-  <h2 id="tech-stack">⚡️ Tech Stack</h2>
-</a> 
+
+<p align="center">
+  <h2 id="tech-stack" align="center">⚡️ Tech Stack</h2>
+</p> 
 
 ### Frontend Technology
 NextJS + shadcn/ui
@@ -43,9 +44,9 @@ NextJS + shadcn/ui
 Vercel
 
 
-<a href="#Quick Setup">
-  <h2 id="quick-setup">⚡️ Quick Setup</h2>
-</a>
+<p>
+  <h2 id="quick-setup" align="center">⚡️ Quick Setup</h2>
+</p>
 
 ### Fork the project
 
@@ -88,9 +89,9 @@ bun dev
 
 The code will run in the default port 3000.
 
-<a href="#contributing guidelines">
-  <h2 id="contributing-guidelines">⚡️ Contributing Guidelines</h2>
-</a>
+<p>
+  <h2 id="contributing-guidelines" align="center">⚡️ Contributing Guidelines</h2>
+</p>
 <p>
   Please refer the CONTRIBUTING.md file for contribution guidelines
 </p>
