@@ -24,6 +24,27 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Working 
+
+![Initial image](green.png)
+
+Initially the website opens in this manner.There is the name Shazam ⚡ and the buttons
+
+To change the setup we go to the setting icon at the bottom right of the page , which opens up the bar
+
+![Configuration](namechange.png)
+
+Alongside the name, you can specify as to which time the background color changes to red/yellow.
+
+As defined on the settings popup,the background changes to yellow at 5s from the timer
+
+![Yellow](yellow.png)
+
+and it changes to red at 15s from the beginning of the timer
+
+![Red](red.png)
+
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
