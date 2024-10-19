@@ -59,5 +59,25 @@ const config: Config = {
     },
   },
   plugins: [require('tailwindcss-animate')],
+  safelist: [
+    'bg-gradient-to-br',
+    'from-green-300',
+    'to-green-600',
+    'from-purple-300',
+    'to-purple-600',
+    'from-red-300',
+    'to-red-600',
+    'from-gray-300',
+    'to-gray-600',
+    'from-blue-300',
+    'to-blue-600',
+    'from-blue-300',
+    'to-blue-600',
+    'from-yellow-400',
+    'to-yellow-600',
+    'from-red-400',
+    'to-red-600',
+    // Add more potential color combinations for the background
+  ],
 }
 export default config
