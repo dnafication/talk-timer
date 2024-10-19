@@ -12,16 +12,22 @@ export function TalkTimer() {
   const [yellowThreshold, setYellowThreshold] = useState(90) // 1 and half minute
   const [redThreshold, setRedThreshold] = useState(120) // 2 minutes
   const [active, setActive] = useState(false)
+  const [selectedColor, setSelectedColor] = useState('green')
+
+  const changeColor = (color: string) => {
+    setSelectedColor(color)
+    // Apply theme logic
+  }
 
   const getBackgroundColor = useCallback(() => {
     if (elapsedTime < yellowThreshold) {
-      return 'bg-gradient-to-br from-green-300 to-green-600'
+      return `bg-gradient-to-br from-${selectedColor}-300 to-${selectedColor}-600`
     } else if (elapsedTime < redThreshold) {
       return 'bg-gradient-to-br from-yellow-400 to-yellow-600'
     } else {
       return 'bg-gradient-to-br from-red-400 to-red-600'
     }
-  }, [elapsedTime, yellowThreshold, redThreshold])
+  }, [elapsedTime, yellowThreshold, redThreshold, selectedColor])
 
   useEffect(() => {
     let interval: NodeJS.Timeout
@@ -93,6 +99,8 @@ export function TalkTimer() {
         setTalkTitle={setTalkTitle}
         setYellowThreshold={setYellowThreshold}
         setRedThreshold={setRedThreshold}
+        selectedColor={selectedColor}
+        changeColor={changeColor}
       />
     </div>
   )
