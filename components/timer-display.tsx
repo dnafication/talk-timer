@@ -1,3 +1,5 @@
+import { cn } from '@/lib/utils'
+
 interface TimerProps {
   elapsedTime: string
   active: boolean
@@ -7,7 +9,9 @@ interface TimerProps {
 const TimerDisplay = ({ elapsedTime, active, bgColor }: TimerProps) => {
   return (
     <div
-      className={`flex flex-col h-screen ${bgColor} transition-colors duration-1000`}
+      className={cn(
+        `flex flex-col h-screen ${bgColor} transition-colors duration-1000`,
+      )}
     >
       <main className="flex-grow flex items-center justify-center">
         <h1

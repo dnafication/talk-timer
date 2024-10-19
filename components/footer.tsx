@@ -9,11 +9,15 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Pause, Play, Settings, TimerReset } from 'lucide-react'
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
+import { ScrollArea } from './ui/scrollarea'
+import { cn } from '@/lib/utils'
 
 type FooterProps = {
   active: boolean
   isRunning: boolean
   talkTitle: string
+  selectedColor: string
   yellowThreshold: number
   redThreshold: number
   toggleTimer: () => void
@@ -21,7 +25,15 @@ type FooterProps = {
   setTalkTitle: (title: string) => void
   setYellowThreshold: (threshold: number) => void
   setRedThreshold: (threshold: number) => void
+  changeColor: (newColor: string) => void
 }
+
+const themes: { name: string; color: string }[] = [
+  { name: 'Green', color: 'green' },
+  { name: 'Purple', color: 'purple' },
+  { name: 'Blue', color: 'blue' },
+  { name: 'gray', color: 'gray' },
+]
 
 const Footer = ({
   active,
@@ -34,10 +46,11 @@ const Footer = ({
   setTalkTitle,
   setYellowThreshold,
   setRedThreshold,
+  changeColor,
 }: FooterProps) => {
   return (
     <footer
-      className={`absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white px-5 py-4 flex justify-between items-center transition-opacity duration-300 ${
+      className={`absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white px-5 py-4 flex justify-between gap-4 items-center transition-opacity duration-300 ${
         active ? 'opacity-100' : 'opacity-0'
       }`}
     >
@@ -62,6 +75,43 @@ const Footer = ({
           {talkTitle}
         </h2>
       </div>
+      <Popover>
+        <PopoverTrigger asChild>
+          <button className="p-2 border rounded-md" title="Change Theme">
+            🎨 Theme
+          </button>
+        </PopoverTrigger>
+        <PopoverContent className="w-72 p-4">
+          <h2 className="text-lg font-semibold mb-2">Select Theme</h2>
+          <ScrollArea className="h-40 mb-4">
+            <div className="grid grid-cols-1 gap-2">
+              {themes.map((theme) => (
+                <button
+                  key={theme.name}
+                  className={cn(
+                    'flex items-center space-x-2 p-2 rounded-md border hover:bg-gray-100 dark:hover:bg-gray-800',
+                  )}
+                  onClick={() => changeColor(theme.color)}
+                >
+                  <div
+                    className="h-5 w-5 rounded-full border"
+                    style={{ backgroundColor: theme.color }}
+                  ></div>
+                  <span>{theme.name}</span>
+                </button>
+              ))}
+            </div>
+          </ScrollArea>
+          {/* If we implement custom colors for the timer, we can add this back in */}
+          {/* <div className="mb-2">
+            <h3 className="text-sm font-medium mb-1">Custom Color</h3>
+            <HexColorPicker
+              color={selectedColor}
+              onChange={changeColor}
+            />
+          </div> */}
+        </PopoverContent>
+      </Popover>
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="outline" size="icon" title="Settings">
