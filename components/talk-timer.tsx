@@ -76,7 +76,7 @@ export function TalkTimer() {
       .padStart(2, '0')}`
   }
 
-  const toggleFullscreen = () => {
+  const toggleFullscreen = useCallback(() => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen().catch((err) => {
         console.error('Error attempting to enable fullscreen:', err)
@@ -84,7 +84,7 @@ export function TalkTimer() {
     } else {
       document.exitFullscreen()
     }
-  }
+  }, [])
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -92,6 +92,15 @@ export function TalkTimer() {
     }
 
     const handleKeyPress = (e: KeyboardEvent) => {
+      // Don't trigger if user is typing in an input field
+      if (
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement ||
+        (e.target instanceof HTMLElement && e.target.isContentEditable)
+      ) {
+        return
+      }
+
       if (e.key === 'f' || e.key === 'F') {
         toggleFullscreen()
       }
@@ -104,7 +113,7 @@ export function TalkTimer() {
       document.removeEventListener('fullscreenchange', handleFullscreenChange)
       document.removeEventListener('keydown', handleKeyPress)
     }
-  }, [])
+  }, [toggleFullscreen])
 
   return (
     <div className="relative h-screen">
