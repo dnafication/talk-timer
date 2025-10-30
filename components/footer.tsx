@@ -8,7 +8,14 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Pause, Play, Settings, TimerReset } from 'lucide-react'
+import {
+  Maximize,
+  Minimize,
+  Pause,
+  Play,
+  Settings,
+  TimerReset,
+} from 'lucide-react'
 
 type FooterProps = {
   active: boolean
@@ -16,8 +23,10 @@ type FooterProps = {
   talkTitle: string
   yellowThreshold: number
   redThreshold: number
+  isFullscreen: boolean
   toggleTimer: () => void
   resetTimer: () => void
+  toggleFullscreen: () => void
   setTalkTitle: (title: string) => void
   setYellowThreshold: (threshold: number) => void
   setRedThreshold: (threshold: number) => void
@@ -29,8 +38,10 @@ const Footer = ({
   talkTitle,
   yellowThreshold,
   redThreshold,
+  isFullscreen,
   toggleTimer,
   resetTimer,
+  toggleFullscreen,
   setTalkTitle,
   setYellowThreshold,
   setRedThreshold,
@@ -55,6 +66,17 @@ const Footer = ({
         </Button>
         <Button onClick={resetTimer} variant="outline" title="Reset Timer">
           <TimerReset className="h-4 w-4" strokeWidth={3} />
+        </Button>
+        <Button
+          onClick={toggleFullscreen}
+          variant="outline"
+          title={isFullscreen ? 'Exit Fullscreen (F)' : 'Enter Fullscreen (F)'}
+        >
+          {isFullscreen ? (
+            <Minimize className="h-4 w-4" strokeWidth={3} />
+          ) : (
+            <Maximize className="h-4 w-4" strokeWidth={3} />
+          )}
         </Button>
       </div>
       <div className="text-center flex-grow">
