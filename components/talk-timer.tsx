@@ -12,6 +12,7 @@ export function TalkTimer() {
   const [yellowThreshold, setYellowThreshold] = useState(90) // 1 and half minute
   const [redThreshold, setRedThreshold] = useState(120) // 2 minutes
   const [active, setActive] = useState(false)
+  const [isFullscreen, setIsFullscreen] = useState(false)
 
   const getBackgroundColor = useCallback(() => {
     if (elapsedTime < yellowThreshold) {
@@ -75,6 +76,45 @@ export function TalkTimer() {
       .padStart(2, '0')}`
   }
 
+  const toggleFullscreen = useCallback(() => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch((err) => {
+        console.error('Error attempting to enable fullscreen:', err)
+      })
+    } else {
+      document.exitFullscreen()
+    }
+  }, [])
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement)
+    }
+
+    const handleKeyPress = (e: KeyboardEvent) => {
+      // Don't trigger if user is typing in an input field
+      if (
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement ||
+        (e.target instanceof HTMLElement && e.target.isContentEditable)
+      ) {
+        return
+      }
+
+      if (e.key === 'f' || e.key === 'F') {
+        toggleFullscreen()
+      }
+    }
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange)
+    document.addEventListener('keydown', handleKeyPress)
+
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange)
+      document.removeEventListener('keydown', handleKeyPress)
+    }
+  }, [toggleFullscreen])
+
   return (
     <div className="relative h-screen">
       <TimerDisplay
@@ -88,8 +128,10 @@ export function TalkTimer() {
         talkTitle={talkTitle}
         yellowThreshold={yellowThreshold}
         redThreshold={redThreshold}
+        isFullscreen={isFullscreen}
         toggleTimer={toggleTimer}
         resetTimer={resetTimer}
+        toggleFullscreen={toggleFullscreen}
         setTalkTitle={setTalkTitle}
         setYellowThreshold={setYellowThreshold}
         setRedThreshold={setRedThreshold}

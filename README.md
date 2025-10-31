@@ -4,6 +4,13 @@ A simple timer for talks, with configurable time for warning and end of talk.
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app). It uses [shadcn/ui](https://ui.shadcn.com/) for the UI components.
 
+## Features
+
+- **Fullscreen Mode**: Toggle fullscreen mode for a distraction-free timer experience
+  - Click the fullscreen button (maximize/minimize icon) in the footer controls
+  - Use the keyboard shortcut **F** to quickly toggle fullscreen mode
+  - Works across different browsers and devices
+
 ## Getting Started
 
 First, run the development server:
