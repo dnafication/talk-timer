@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from 'react'
 
 import Footer from './footer'
+import ProgressBar from './progress-bar'
 import TimerDisplay from './timer-display'
 
 export function TalkTimer() {
@@ -122,6 +123,13 @@ export function TalkTimer() {
         active={active}
         bgColor={getBackgroundColor()}
       />
+      {isRunning && (
+        <ProgressBar
+          elapsedTime={elapsedTime}
+          totalTime={redThreshold}
+          colorClass={getBackgroundColor()}
+        />
+      )}
       <Footer
         active={active}
         isRunning={isRunning}
