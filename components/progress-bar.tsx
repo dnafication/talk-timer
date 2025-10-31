@@ -55,17 +55,17 @@ const ProgressBar = ({
       </div>
 
       {/* Bottom bar */}
-      <div className="absolute bottom-0 right-0 h-[3px] bg-white bg-opacity-20 w-full">
+      <div className="absolute bottom-0 left-0 h-[3px] bg-white bg-opacity-20 w-full flex justify-end">
         <div
-          className={`h-full ${getProgressColor()} transition-all duration-300 ml-auto`}
+          className={`h-full ${getProgressColor()} transition-all duration-300`}
           style={{ width: `${getSegmentProgress(2)}%` }}
         />
       </div>
 
       {/* Left bar */}
-      <div className="absolute bottom-0 left-0 w-[3px] bg-white bg-opacity-20 h-full">
+      <div className="absolute top-0 left-0 w-[3px] bg-white bg-opacity-20 h-full flex flex-col justify-end">
         <div
-          className={`w-full ${getProgressColor()} transition-all duration-300 mt-auto`}
+          className={`w-full ${getProgressColor()} transition-all duration-300`}
           style={{ height: `${getSegmentProgress(3)}%` }}
         />
       </div>
