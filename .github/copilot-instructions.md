@@ -34,7 +34,7 @@ Talk Timer is a simple, fullscreen-capable timer application designed for tracki
 
 ### TypeScript
 
-- Use **strict mode** TypeScript
+- Use **TypeScript with strict compiler options enabled** (as configured in tsconfig.json)
 - Prefer type inference over explicit types where clear
 - Use `interface` for component props
 - Use descriptive variable and function names
@@ -45,7 +45,9 @@ Talk Timer is a simple, fullscreen-capable timer application designed for tracki
 - Mark client components with `'use client'` directive at the top of the file
 - Use `useCallback` for memoized callbacks
 - Use `useEffect` for side effects (timers, event listeners)
-- Prefer named exports for components (except page.tsx which uses default export)
+- Use named exports for the main component (e.g., `TalkTimer`)
+- Use default exports for smaller/utility components (e.g., `TimerDisplay`, `Footer`)
+- Page components (in `app/`) use default exports following Next.js conventions
 
 ### Styling
 
@@ -96,7 +98,7 @@ npm start          # Start production server
 
 - Timer uses `setInterval` with 1-second increments
 - State managed with React hooks (`useState`, `useEffect`)
-- Time thresholds are configurable (default: 90s yellow, 120s red)
+- Time thresholds are configurable (default: 90 seconds / 1.5 minutes for yellow, 120 seconds / 2 minutes for red)
 
 ### Fullscreen Mode
 
@@ -129,8 +131,8 @@ npm start          # Start production server
 
 ## Testing Considerations
 
-- Currently no automated tests exist
-- Manual testing is required
+- The project currently relies on manual testing
+- No automated test framework is configured yet
 - Test key user flows:
   - Starting/stopping/resetting timer
   - Fullscreen toggle (both button and keyboard)
