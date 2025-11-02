@@ -39,7 +39,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
    - Set the yellow threshold (warning time in seconds, default: 90 seconds)
    - Set the red threshold (overtime time in seconds, default: 120 seconds)
 5. **Fullscreen Mode**: 
-   - Click the Fullscreen button (⛶) or press **F** key
+   - Click the Fullscreen button or press **F** key
    - Press **Esc** or **F** key again to exit fullscreen
 
 ### Keyboard Shortcuts
