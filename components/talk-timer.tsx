@@ -124,11 +124,7 @@ export function TalkTimer() {
         bgColor={getBackgroundColor()}
       />
       {isRunning && (
-        <ProgressBar
-          elapsedTime={elapsedTime}
-          totalTime={redThreshold}
-          colorClass={getBackgroundColor()}
-        />
+        <ProgressBar elapsedTime={elapsedTime} totalTime={redThreshold} />
       )}
       <Footer
         active={active}
