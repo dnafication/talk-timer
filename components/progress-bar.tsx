@@ -3,7 +3,7 @@ interface ProgressBarProps {
   totalTime: number
 }
 
-const ProgressBar = ({ elapsedTime, totalTime }: ProgressBarProps) => {
+export const ProgressBar = ({ elapsedTime, totalTime }: ProgressBarProps) => {
   const progress = totalTime > 0 ? (elapsedTime / totalTime) * 100 : 0
   const clampedProgress = Math.min(progress, 100)
 
@@ -18,5 +18,3 @@ const ProgressBar = ({ elapsedTime, totalTime }: ProgressBarProps) => {
     </div>
   )
 }
-
-export default ProgressBar

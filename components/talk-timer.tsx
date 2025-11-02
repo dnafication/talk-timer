@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from 'react'
 
 import Footer from './footer'
-import ProgressBar from './progress-bar'
+import { ProgressBar } from './progress-bar'
 import TimerDisplay from './timer-display'
 
 export function TalkTimer() {
