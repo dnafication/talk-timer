@@ -96,7 +96,7 @@ const Footer = ({
         </Button>
         <Dialog>
           <DialogTrigger asChild>
-            <Button variant="outline" size="icon" title="Settings">
+            <Button variant="outline" title="Settings">
               <Settings className="h-4 w-4" strokeWidth={3} />
             </Button>
           </DialogTrigger>
