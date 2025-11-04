@@ -103,11 +103,13 @@ export function TalkTimer() {
       }
 
       if (e.key === 'f' || e.key === 'F') {
+        e.preventDefault()
         toggleFullscreen()
       } else if (e.key === 'p' || e.key === 'P' || e.key === ' ') {
         e.preventDefault() // Prevent space from scrolling the page
         toggleTimer()
       } else if (e.key === 'r' || e.key === 'R') {
+        e.preventDefault()
         resetTimer()
       }
     }
