@@ -14,6 +14,7 @@ export function TalkTimer() {
   const [redThreshold, setRedThreshold] = useState(120) // 2 minutes
   const [active, setActive] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const [showShortcutsDialog, setShowShortcutsDialog] = useState(false)
 
   const getBackgroundColor = useCallback(() => {
     if (elapsedTime < yellowThreshold) {
@@ -58,16 +59,19 @@ export function TalkTimer() {
 
   useEffect(() => {
     if (elapsedTime > 0) {
-      document.title = `Elapsed - ${formatTime(elapsedTime)}`
+      const pausedText = !isRunning ? ' - PAUSED' : ''
+      document.title = `Elapsed - ${formatTime(elapsedTime)}${pausedText}`
+    } else {
+      document.title = 'Talk Timer'
     }
   })
 
-  const toggleTimer = () => setIsRunning(!isRunning)
+  const toggleTimer = useCallback(() => setIsRunning(!isRunning), [isRunning])
 
-  const resetTimer = () => {
+  const resetTimer = useCallback(() => {
     setIsRunning(false)
     setElapsedTime(0)
-  }
+  }, [])
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60)
@@ -103,7 +107,17 @@ export function TalkTimer() {
       }
 
       if (e.key === 'f' || e.key === 'F') {
+        e.preventDefault()
         toggleFullscreen()
+      } else if (e.key === 'p' || e.key === 'P' || e.key === ' ') {
+        e.preventDefault() // Prevent space from scrolling the page
+        toggleTimer()
+      } else if (e.key === 'r' || e.key === 'R') {
+        e.preventDefault()
+        resetTimer()
+      } else if (e.key === '?') {
+        e.preventDefault()
+        setShowShortcutsDialog(true)
       }
     }
 
@@ -114,7 +128,7 @@ export function TalkTimer() {
       document.removeEventListener('fullscreenchange', handleFullscreenChange)
       document.removeEventListener('keydown', handleKeyPress)
     }
-  }, [toggleFullscreen])
+  }, [toggleFullscreen, toggleTimer, resetTimer])
 
   return (
     <div className="relative h-screen">
@@ -122,6 +136,7 @@ export function TalkTimer() {
         elapsedTime={formatTime(elapsedTime)}
         active={active}
         bgColor={getBackgroundColor()}
+        isRunning={isRunning}
       />
       {elapsedTime > 0 && (
         <ProgressBar elapsedTime={elapsedTime} totalTime={redThreshold} />
@@ -133,12 +148,14 @@ export function TalkTimer() {
         yellowThreshold={yellowThreshold}
         redThreshold={redThreshold}
         isFullscreen={isFullscreen}
+        showShortcutsDialog={showShortcutsDialog}
         toggleTimer={toggleTimer}
         resetTimer={resetTimer}
         toggleFullscreen={toggleFullscreen}
         setTalkTitle={setTalkTitle}
         setYellowThreshold={setYellowThreshold}
         setRedThreshold={setRedThreshold}
+        setShowShortcutsDialog={setShowShortcutsDialog}
       />
     </div>
   )

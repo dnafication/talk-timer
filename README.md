@@ -31,9 +31,9 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Usage
 
-1. **Starting the Timer**: Click the Play button (▶️) in the footer controls
-2. **Pausing the Timer**: Click the Pause button (⏸) while the timer is running
-3. **Resetting the Timer**: Click the Reset button (↻) to set the timer back to 00:00
+1. **Starting the Timer**: Click the Play button (▶️) in the footer controls or press **P** or **Space**
+2. **Pausing the Timer**: Click the Pause button (⏸) while the timer is running or press **P** or **Space**
+3. **Resetting the Timer**: Click the Reset button (↻) to set the timer back to 00:00 or press **R**
 4. **Configuring Settings**: Click the Settings button (⚙️) to:
    - Change the talk title
    - Set the yellow threshold (warning time in seconds, default: 90 seconds)
@@ -44,7 +44,12 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ### Keyboard Shortcuts
 
-- **F**: Toggle fullscreen mode (disabled when typing in input fields)
+- **P** or **Space**: Toggle start/pause timer
+- **R**: Reset timer to 00:00
+- **F**: Toggle fullscreen mode
+- **?**: Show keyboard shortcuts help dialog
+
+*Note: All keyboard shortcuts are disabled when typing in input fields*
 
 ## Getting Started
 
