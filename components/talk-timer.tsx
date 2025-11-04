@@ -62,12 +62,12 @@ export function TalkTimer() {
     }
   })
 
-  const toggleTimer = () => setIsRunning(!isRunning)
+  const toggleTimer = useCallback(() => setIsRunning(!isRunning), [isRunning])
 
-  const resetTimer = () => {
+  const resetTimer = useCallback(() => {
     setIsRunning(false)
     setElapsedTime(0)
-  }
+  }, [])
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60)
@@ -104,6 +104,11 @@ export function TalkTimer() {
 
       if (e.key === 'f' || e.key === 'F') {
         toggleFullscreen()
+      } else if (e.key === 'p' || e.key === 'P' || e.key === ' ') {
+        e.preventDefault() // Prevent space from scrolling the page
+        toggleTimer()
+      } else if (e.key === 'r' || e.key === 'R') {
+        resetTimer()
       }
     }
 
@@ -114,7 +119,7 @@ export function TalkTimer() {
       document.removeEventListener('fullscreenchange', handleFullscreenChange)
       document.removeEventListener('keydown', handleKeyPress)
     }
-  }, [toggleFullscreen])
+  }, [toggleFullscreen, toggleTimer, resetTimer])
 
   return (
     <div className="relative h-screen">
