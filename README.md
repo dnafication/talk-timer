@@ -47,6 +47,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 - **P** or **Space**: Toggle start/pause timer
 - **R**: Reset timer to 00:00
 - **F**: Toggle fullscreen mode
+- **?**: Show keyboard shortcuts help dialog
 
 *Note: All keyboard shortcuts are disabled when typing in input fields*
 

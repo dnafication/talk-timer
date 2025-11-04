@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from 'react'
 
 import Footer from './footer'
+import { KeyboardShortcutsDialog } from './keyboard-shortcuts-dialog'
 import { ProgressBar } from './progress-bar'
 import TimerDisplay from './timer-display'
 
@@ -14,6 +15,7 @@ export function TalkTimer() {
   const [redThreshold, setRedThreshold] = useState(120) // 2 minutes
   const [active, setActive] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const [showShortcutsDialog, setShowShortcutsDialog] = useState(false)
 
   const getBackgroundColor = useCallback(() => {
     if (elapsedTime < yellowThreshold) {
@@ -114,6 +116,9 @@ export function TalkTimer() {
       } else if (e.key === 'r' || e.key === 'R') {
         e.preventDefault()
         resetTimer()
+      } else if (e.key === '?') {
+        e.preventDefault()
+        setShowShortcutsDialog(true)
       }
     }
 
@@ -150,6 +155,10 @@ export function TalkTimer() {
         setTalkTitle={setTalkTitle}
         setYellowThreshold={setYellowThreshold}
         setRedThreshold={setRedThreshold}
+      />
+      <KeyboardShortcutsDialog
+        open={showShortcutsDialog}
+        onOpenChange={setShowShortcutsDialog}
       />
     </div>
   )
