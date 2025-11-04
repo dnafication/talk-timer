@@ -59,6 +59,8 @@ export function TalkTimer() {
   useEffect(() => {
     if (elapsedTime > 0) {
       document.title = `Elapsed - ${formatTime(elapsedTime)}`
+    } else {
+      document.title = 'Talk Timer'
     }
   })
 
