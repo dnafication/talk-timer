@@ -58,7 +58,8 @@ export function TalkTimer() {
 
   useEffect(() => {
     if (elapsedTime > 0) {
-      document.title = `Elapsed - ${formatTime(elapsedTime)}`
+      const pausedText = !isRunning ? ' - PAUSED' : ''
+      document.title = `Elapsed - ${formatTime(elapsedTime)}${pausedText}`
     } else {
       document.title = 'Talk Timer'
     }
@@ -131,6 +132,7 @@ export function TalkTimer() {
         elapsedTime={formatTime(elapsedTime)}
         active={active}
         bgColor={getBackgroundColor()}
+        isRunning={isRunning}
       />
       {elapsedTime > 0 && (
         <ProgressBar elapsedTime={elapsedTime} totalTime={redThreshold} />
