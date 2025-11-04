@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useState } from 'react'
 
 import Footer from './footer'
-import { KeyboardShortcutsDialog } from './keyboard-shortcuts-dialog'
 import { ProgressBar } from './progress-bar'
 import TimerDisplay from './timer-display'
 
@@ -149,16 +148,14 @@ export function TalkTimer() {
         yellowThreshold={yellowThreshold}
         redThreshold={redThreshold}
         isFullscreen={isFullscreen}
+        showShortcutsDialog={showShortcutsDialog}
         toggleTimer={toggleTimer}
         resetTimer={resetTimer}
         toggleFullscreen={toggleFullscreen}
         setTalkTitle={setTalkTitle}
         setYellowThreshold={setYellowThreshold}
         setRedThreshold={setRedThreshold}
-      />
-      <KeyboardShortcutsDialog
-        open={showShortcutsDialog}
-        onOpenChange={setShowShortcutsDialog}
+        setShowShortcutsDialog={setShowShortcutsDialog}
       />
     </div>
   )
