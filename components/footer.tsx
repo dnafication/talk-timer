@@ -19,6 +19,11 @@ import {
 } from 'lucide-react'
 import { KeyboardShortcutsDialog } from './keyboard-shortcuts-dialog'
 import { TimerMode } from './talk-timer'
+import {
+  MAX_TIMER_FONT_SIZE_VH,
+  MIN_TIMER_FONT_SIZE_VH,
+  clampTimerFontSize,
+} from './timer-font-size'
 
 type FooterProps = {
   active: boolean
@@ -194,20 +199,18 @@ const Footer = ({
                   </div>
                   <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="timerFontSize" className="text-right">
-                      Time size (vh)
+                      Timer size (vh)
                     </Label>
                     <Input
                       id="timerFontSize"
                       type="number"
-                      min={8}
-                      max={80}
+                      min={MIN_TIMER_FONT_SIZE_VH}
+                      max={MAX_TIMER_FONT_SIZE_VH}
                       value={timerFontSizeVh}
                       onChange={(e) => {
                         const nextSize = Number(e.target.value)
                         if (!Number.isNaN(nextSize)) {
-                          setTimerFontSizeVh(
-                            Math.min(80, Math.max(8, nextSize)),
-                          )
+                          setTimerFontSizeVh(clampTimerFontSize(nextSize))
                         }
                       }}
                       className="col-span-3"

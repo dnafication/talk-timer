@@ -1,3 +1,5 @@
+import { clampTimerFontSize } from './timer-font-size'
+
 interface TimerProps {
   displayTime: string
   displayLabel: string
@@ -18,7 +20,7 @@ const TimerDisplay = ({
   isOvertime = false,
 }: TimerProps) => {
   const isPaused = !isRunning && displayTime !== '00:00'
-  const safeTimerFontSizeVh = Math.min(80, Math.max(8, timerFontSizeVh))
+  const safeTimerFontSizeVh = clampTimerFontSize(timerFontSizeVh)
 
   return (
     <div
@@ -36,7 +38,7 @@ const TimerDisplay = ({
           <div className="flex items-center gap-6">
             <h1
               title={`${displayLabel} Time`}
-              className={`text-8xl font-bold text-white transition-opacity drop-shadow-md duration-300 ${
+              className={`font-bold text-white transition-opacity drop-shadow-md duration-300 ${
                 active ? 'opacity-100' : 'opacity-70'
               } ${isOvertime ? 'animate-pulse' : ''}`}
               style={{ fontSize: `${safeTimerFontSizeVh}vh` }}

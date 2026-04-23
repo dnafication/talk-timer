@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from 'react'
 import Footer from './footer'
 import { ProgressBar } from './progress-bar'
 import TimerDisplay from './timer-display'
+import { DEFAULT_TIMER_FONT_SIZE_VH } from './timer-font-size'
 
 export type TimerMode = 'stopwatch' | 'scheduled'
 
@@ -32,7 +33,9 @@ export function TalkTimer() {
   const [talkTitle, setTalkTitle] = useState('My Lightning Talk ⚡')
   const [yellowThreshold, setYellowThreshold] = useState(90) // 1 and half minute
   const [redThreshold, setRedThreshold] = useState(120) // 2 minutes
-  const [timerFontSizeVh, setTimerFontSizeVh] = useState(14)
+  const [timerFontSizeVh, setTimerFontSizeVh] = useState(
+    DEFAULT_TIMER_FONT_SIZE_VH,
+  )
   const [active, setActive] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [showShortcutsDialog, setShowShortcutsDialog] = useState(false)
