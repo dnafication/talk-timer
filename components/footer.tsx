@@ -19,6 +19,11 @@ import {
 } from 'lucide-react'
 import { KeyboardShortcutsDialog } from './keyboard-shortcuts-dialog'
 import { TimerMode } from './talk-timer'
+import {
+  MAX_TIMER_FONT_SIZE_VH,
+  MIN_TIMER_FONT_SIZE_VH,
+  clampTimerFontSize,
+} from './timer-font-size'
 
 type FooterProps = {
   active: boolean
@@ -26,6 +31,7 @@ type FooterProps = {
   talkTitle: string
   yellowThreshold: number
   redThreshold: number
+  timerFontSizeVh: number
   isFullscreen: boolean
   showShortcutsDialog: boolean
   timerMode: TimerMode
@@ -37,6 +43,7 @@ type FooterProps = {
   setTalkTitle: (title: string) => void
   setYellowThreshold: (threshold: number) => void
   setRedThreshold: (threshold: number) => void
+  setTimerFontSizeVh: (size: number) => void
   setShowShortcutsDialog: (open: boolean) => void
   setTimerMode: (mode: TimerMode) => void
   setScheduledStartTime: (time: string) => void
@@ -49,6 +56,7 @@ const Footer = ({
   talkTitle,
   yellowThreshold,
   redThreshold,
+  timerFontSizeVh,
   isFullscreen,
   showShortcutsDialog,
   timerMode,
@@ -60,6 +68,7 @@ const Footer = ({
   setTalkTitle,
   setYellowThreshold,
   setRedThreshold,
+  setTimerFontSizeVh,
   setShowShortcutsDialog,
   setTimerMode,
   setScheduledStartTime,
@@ -152,6 +161,29 @@ const Footer = ({
                   >
                     Scheduled
                   </Button>
+                </div>
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="timerFontSize" className="text-right">
+                  Timer size
+                </Label>
+                <div className="col-span-3">
+                  <Input
+                    id="timerFontSize"
+                    type="range"
+                    min={MIN_TIMER_FONT_SIZE_VH}
+                    max={MAX_TIMER_FONT_SIZE_VH}
+                    value={timerFontSizeVh}
+                    onChange={(e) => {
+                      const nextSize = Number(e.target.value)
+                      if (!Number.isNaN(nextSize)) {
+                        setTimerFontSizeVh(clampTimerFontSize(nextSize))
+                      }
+                    }}
+                  />
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    {timerFontSizeVh}vh (max {MAX_TIMER_FONT_SIZE_VH}vh)
+                  </p>
                 </div>
               </div>
               {timerMode === 'stopwatch' && (
