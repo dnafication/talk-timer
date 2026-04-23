@@ -26,6 +26,7 @@ type FooterProps = {
   talkTitle: string
   yellowThreshold: number
   redThreshold: number
+  timerFontSizeVh: number
   isFullscreen: boolean
   showShortcutsDialog: boolean
   timerMode: TimerMode
@@ -37,6 +38,7 @@ type FooterProps = {
   setTalkTitle: (title: string) => void
   setYellowThreshold: (threshold: number) => void
   setRedThreshold: (threshold: number) => void
+  setTimerFontSizeVh: (size: number) => void
   setShowShortcutsDialog: (open: boolean) => void
   setTimerMode: (mode: TimerMode) => void
   setScheduledStartTime: (time: string) => void
@@ -49,6 +51,7 @@ const Footer = ({
   talkTitle,
   yellowThreshold,
   redThreshold,
+  timerFontSizeVh,
   isFullscreen,
   showShortcutsDialog,
   timerMode,
@@ -60,6 +63,7 @@ const Footer = ({
   setTalkTitle,
   setYellowThreshold,
   setRedThreshold,
+  setTimerFontSizeVh,
   setShowShortcutsDialog,
   setTimerMode,
   setScheduledStartTime,
@@ -185,6 +189,27 @@ const Footer = ({
                       type="number"
                       value={redThreshold}
                       onChange={(e) => setRedThreshold(Number(e.target.value))}
+                      className="col-span-3"
+                    />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="timerFontSize" className="text-right">
+                      Time size (vh)
+                    </Label>
+                    <Input
+                      id="timerFontSize"
+                      type="number"
+                      min={8}
+                      max={80}
+                      value={timerFontSizeVh}
+                      onChange={(e) => {
+                        const nextSize = Number(e.target.value)
+                        if (!Number.isNaN(nextSize)) {
+                          setTimerFontSizeVh(
+                            Math.min(80, Math.max(8, nextSize)),
+                          )
+                        }
+                      }}
                       className="col-span-3"
                     />
                   </div>

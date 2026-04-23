@@ -32,6 +32,7 @@ export function TalkTimer() {
   const [talkTitle, setTalkTitle] = useState('My Lightning Talk ⚡')
   const [yellowThreshold, setYellowThreshold] = useState(90) // 1 and half minute
   const [redThreshold, setRedThreshold] = useState(120) // 2 minutes
+  const [timerFontSizeVh, setTimerFontSizeVh] = useState(14)
   const [active, setActive] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [showShortcutsDialog, setShowShortcutsDialog] = useState(false)
@@ -267,6 +268,7 @@ export function TalkTimer() {
         active={active}
         bgColor={getBackgroundColor()}
         isRunning={isScheduledMode || isRunning}
+        timerFontSizeVh={timerFontSizeVh}
         isOvertime={isOvertime}
       />
       {showProgressBar && (
@@ -278,6 +280,7 @@ export function TalkTimer() {
         talkTitle={talkTitle}
         yellowThreshold={yellowThreshold}
         redThreshold={redThreshold}
+        timerFontSizeVh={timerFontSizeVh}
         isFullscreen={isFullscreen}
         showShortcutsDialog={showShortcutsDialog}
         timerMode={timerMode}
@@ -289,6 +292,7 @@ export function TalkTimer() {
         setTalkTitle={setTalkTitle}
         setYellowThreshold={setYellowThreshold}
         setRedThreshold={setRedThreshold}
+        setTimerFontSizeVh={setTimerFontSizeVh}
         setShowShortcutsDialog={setShowShortcutsDialog}
         setTimerMode={setTimerMode}
         setScheduledStartTime={setScheduledStartTime}

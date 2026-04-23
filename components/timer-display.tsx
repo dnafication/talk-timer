@@ -4,6 +4,7 @@ interface TimerProps {
   active: boolean
   bgColor: string
   isRunning: boolean
+  timerFontSizeVh: number
   isOvertime?: boolean
 }
 
@@ -13,9 +14,11 @@ const TimerDisplay = ({
   active,
   bgColor,
   isRunning,
+  timerFontSizeVh,
   isOvertime = false,
 }: TimerProps) => {
   const isPaused = !isRunning && displayTime !== '00:00'
+  const safeTimerFontSizeVh = Math.min(80, Math.max(8, timerFontSizeVh))
 
   return (
     <div
@@ -36,6 +39,7 @@ const TimerDisplay = ({
               className={`text-8xl font-bold text-white transition-opacity drop-shadow-md duration-300 ${
                 active ? 'opacity-100' : 'opacity-70'
               } ${isOvertime ? 'animate-pulse' : ''}`}
+              style={{ fontSize: `${safeTimerFontSizeVh}vh` }}
             >
               {displayTime}
             </h1>

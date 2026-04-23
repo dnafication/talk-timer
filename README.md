@@ -24,6 +24,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
   - Set a custom talk title
   - Configure yellow threshold (warning time in seconds)
   - Configure red threshold (overtime time in seconds)
+  - Adjust timer font size (up to 80vh)
   
 - **Auto-hiding Controls**: Footer controls automatically hide after 3 seconds of inactivity, reappearing on mouse movement
 
