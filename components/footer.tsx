@@ -216,8 +216,13 @@ const Footer = ({
                       className="col-span-3"
                     />
                   </div>
-                  <p className="text-xs text-muted-foreground text-center">
-                    🟢 Green → 🟡 Yellow at 5 min left → 🔴 Red at 1 min left
+                  <p
+                    className="text-xs text-muted-foreground text-center"
+                    aria-label="Color thresholds: Green when more than 5 minutes left, Yellow at 5 minutes left, Red at 1 minute left"
+                  >
+                    <span aria-hidden="true">🟢</span> Green →{' '}
+                    <span aria-hidden="true">🟡</span> Yellow at 5 min left →{' '}
+                    <span aria-hidden="true">🔴</span> Red at 1 min left
                   </p>
                 </>
               )}

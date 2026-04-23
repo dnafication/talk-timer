@@ -37,7 +37,7 @@ const TimerDisplay = ({
                 active ? 'opacity-100' : 'opacity-70'
               } ${isOvertime ? 'animate-pulse' : ''}`}
             >
-              {isOvertime ? `-${displayTime}` : displayTime}
+              {displayTime}
             </h1>
             {isPaused && (
               <span

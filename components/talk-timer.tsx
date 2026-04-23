@@ -8,6 +8,24 @@ import TimerDisplay from './timer-display'
 
 export type TimerMode = 'stopwatch' | 'scheduled'
 
+const SECONDS_PER_MINUTE = 60
+const MINUTES_PER_HOUR = 60
+const SECONDS_PER_HOUR = SECONDS_PER_MINUTE * MINUTES_PER_HOUR
+const SECONDS_PER_DAY = SECONDS_PER_HOUR * 24
+const HALF_DAY_MS = 12 * SECONDS_PER_HOUR * 1000
+
+/** Calculate the duration in seconds between two HH:MM time strings, wrapping across midnight if needed. */
+function calculateScheduledDuration(startTime: string, endTime: string) {
+  const [startH, startM] = startTime.split(':').map(Number)
+  const [endH, endM] = endTime.split(':').map(Number)
+  const startTotalMin = startH * MINUTES_PER_HOUR + startM
+  const endTotalMin = endH * MINUTES_PER_HOUR + endM
+  const durationMin = endTotalMin - startTotalMin
+  const durationSec = durationMin * SECONDS_PER_MINUTE
+  // Wrap across midnight if end is earlier than start
+  return durationSec < 0 ? durationSec + SECONDS_PER_DAY : durationSec
+}
+
 export function TalkTimer() {
   const [isRunning, setIsRunning] = useState(false)
   const [elapsedTime, setElapsedTime] = useState(0)
@@ -71,9 +89,9 @@ export function TalkTimer() {
       const endDate = new Date()
       endDate.setHours(endH, endM, 0, 0)
 
-      // If end time appears to be before now by more than 12 hours,
+      // If end time appears to be before now by more than half a day,
       // assume it's for the next day
-      if (endDate.getTime() - now.getTime() < -12 * 60 * 60 * 1000) {
+      if (endDate.getTime() - now.getTime() < -HALF_DAY_MS) {
         endDate.setDate(endDate.getDate() + 1)
       }
 
@@ -113,7 +131,7 @@ export function TalkTimer() {
       if (remainingSeconds >= 0) {
         document.title = `Remaining - ${formatTime(remainingSeconds)}`
       } else {
-        document.title = `Overtime - ${formatTime(Math.abs(remainingSeconds))}`
+        document.title = `Overtime - ${formatTime(remainingSeconds, true)}`
       }
     } else if (elapsedTime > 0) {
       const pausedText = !isRunning ? ' - PAUSED' : ''
@@ -130,17 +148,20 @@ export function TalkTimer() {
     setElapsedTime(0)
   }, [])
 
-  const formatTime = (seconds: number) => {
+  const formatTime = (seconds: number, showSign = false) => {
+    const prefix = showSign && seconds < 0 ? '-' : ''
     const absSeconds = Math.abs(seconds)
-    const hrs = Math.floor(absSeconds / 3600)
-    const mins = Math.floor((absSeconds % 3600) / 60)
-    const secs = absSeconds % 60
+    const hrs = Math.floor(absSeconds / SECONDS_PER_HOUR)
+    const mins = Math.floor(
+      (absSeconds % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE,
+    )
+    const secs = absSeconds % SECONDS_PER_MINUTE
     if (hrs > 0) {
-      return `${hrs.toString().padStart(2, '0')}:${mins
+      return `${prefix}${hrs.toString().padStart(2, '0')}:${mins
         .toString()
         .padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
     }
-    return `${mins.toString().padStart(2, '0')}:${secs
+    return `${prefix}${mins.toString().padStart(2, '0')}:${secs
       .toString()
       .padStart(2, '0')}`
   }
@@ -208,7 +229,7 @@ export function TalkTimer() {
 
   if (isScheduledMode && hasScheduledTimes && remainingSeconds !== null) {
     if (remainingSeconds < 0) {
-      displayTime = formatTime(Math.abs(remainingSeconds))
+      displayTime = formatTime(remainingSeconds, true)
       displayLabel = 'Overtime'
       isOvertime = true
     } else {
@@ -224,11 +245,10 @@ export function TalkTimer() {
   let progressElapsed = elapsedTime
   let progressTotal = redThreshold
   if (isScheduledMode && hasScheduledTimes && scheduledStartTime) {
-    const [startH, startM] = scheduledStartTime.split(':').map(Number)
-    const [endH, endM] = scheduledEndTime.split(':').map(Number)
-    const totalDuration =
-      (endH * 60 + endM - (startH * 60 + startM)) * 60 +
-      (endH * 60 + endM < startH * 60 + startM ? 24 * 3600 : 0)
+    const totalDuration = calculateScheduledDuration(
+      scheduledStartTime,
+      scheduledEndTime,
+    )
     const elapsed =
       remainingSeconds !== null ? totalDuration - remainingSeconds : 0
     progressElapsed = Math.max(0, elapsed)
