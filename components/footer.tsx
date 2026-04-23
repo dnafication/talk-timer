@@ -163,6 +163,29 @@ const Footer = ({
                   </Button>
                 </div>
               </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="timerFontSize" className="text-right">
+                  Timer size
+                </Label>
+                <div className="col-span-3">
+                  <Input
+                    id="timerFontSize"
+                    type="range"
+                    min={MIN_TIMER_FONT_SIZE_VH}
+                    max={MAX_TIMER_FONT_SIZE_VH}
+                    value={timerFontSizeVh}
+                    onChange={(e) => {
+                      const nextSize = Number(e.target.value)
+                      if (!Number.isNaN(nextSize)) {
+                        setTimerFontSizeVh(clampTimerFontSize(nextSize))
+                      }
+                    }}
+                  />
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    {timerFontSizeVh}vh (max {MAX_TIMER_FONT_SIZE_VH}vh)
+                  </p>
+                </div>
+              </div>
               {timerMode === 'stopwatch' && (
                 <>
                   <div className="grid grid-cols-4 items-center gap-4">
@@ -194,25 +217,6 @@ const Footer = ({
                       type="number"
                       value={redThreshold}
                       onChange={(e) => setRedThreshold(Number(e.target.value))}
-                      className="col-span-3"
-                    />
-                  </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="timerFontSize" className="text-right">
-                      Timer size (vh)
-                    </Label>
-                    <Input
-                      id="timerFontSize"
-                      type="number"
-                      min={MIN_TIMER_FONT_SIZE_VH}
-                      max={MAX_TIMER_FONT_SIZE_VH}
-                      value={timerFontSizeVh}
-                      onChange={(e) => {
-                        const nextSize = Number(e.target.value)
-                        if (!Number.isNaN(nextSize)) {
-                          setTimerFontSizeVh(clampTimerFontSize(nextSize))
-                        }
-                      }}
                       className="col-span-3"
                     />
                   </div>
