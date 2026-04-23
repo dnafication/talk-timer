@@ -18,6 +18,7 @@ import {
   Info,
 } from 'lucide-react'
 import { KeyboardShortcutsDialog } from './keyboard-shortcuts-dialog'
+import { TimerMode } from './talk-timer'
 
 type FooterProps = {
   active: boolean
@@ -27,6 +28,9 @@ type FooterProps = {
   redThreshold: number
   isFullscreen: boolean
   showShortcutsDialog: boolean
+  timerMode: TimerMode
+  scheduledStartTime: string
+  scheduledEndTime: string
   toggleTimer: () => void
   resetTimer: () => void
   toggleFullscreen: () => void
@@ -34,6 +38,9 @@ type FooterProps = {
   setYellowThreshold: (threshold: number) => void
   setRedThreshold: (threshold: number) => void
   setShowShortcutsDialog: (open: boolean) => void
+  setTimerMode: (mode: TimerMode) => void
+  setScheduledStartTime: (time: string) => void
+  setScheduledEndTime: (time: string) => void
 }
 
 const Footer = ({
@@ -44,6 +51,9 @@ const Footer = ({
   redThreshold,
   isFullscreen,
   showShortcutsDialog,
+  timerMode,
+  scheduledStartTime,
+  scheduledEndTime,
   toggleTimer,
   resetTimer,
   toggleFullscreen,
@@ -51,6 +61,9 @@ const Footer = ({
   setYellowThreshold,
   setRedThreshold,
   setShowShortcutsDialog,
+  setTimerMode,
+  setScheduledStartTime,
+  setScheduledEndTime,
 }: FooterProps) => {
   return (
     <footer
@@ -59,20 +72,24 @@ const Footer = ({
       }`}
     >
       <div className="flex items-center space-x-4">
-        <Button
-          onClick={toggleTimer}
-          variant="outline"
-          title={isRunning ? 'Pause Timer' : 'Start Timer'}
-        >
-          {isRunning ? (
-            <Pause className="h-4 w-4" strokeWidth={3} />
-          ) : (
-            <Play className="h-4 w-4" strokeWidth={3} />
-          )}
-        </Button>
-        <Button onClick={resetTimer} variant="outline" title="Reset Timer">
-          <TimerReset className="h-4 w-4" strokeWidth={3} />
-        </Button>
+        {timerMode === 'stopwatch' && (
+          <>
+            <Button
+              onClick={toggleTimer}
+              variant="outline"
+              title={isRunning ? 'Pause Timer' : 'Start Timer'}
+            >
+              {isRunning ? (
+                <Pause className="h-4 w-4" strokeWidth={3} />
+              ) : (
+                <Play className="h-4 w-4" strokeWidth={3} />
+              )}
+            </Button>
+            <Button onClick={resetTimer} variant="outline" title="Reset Timer">
+              <TimerReset className="h-4 w-4" strokeWidth={3} />
+            </Button>
+          </>
+        )}
         <Button
           onClick={toggleFullscreen}
           variant="outline"
@@ -117,35 +134,98 @@ const Footer = ({
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label
-                  htmlFor="yellowThreshold"
-                  className="text-right text-yellow-600"
-                >
-                  Yellow at (seconds)
+                <Label htmlFor="timerMode" className="text-right">
+                  Mode
                 </Label>
-                <Input
-                  id="yellowThreshold"
-                  type="number"
-                  value={yellowThreshold}
-                  onChange={(e) => setYellowThreshold(Number(e.target.value))}
-                  className="col-span-3"
-                />
+                <div className="col-span-3 flex gap-2">
+                  <Button
+                    variant={timerMode === 'stopwatch' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => setTimerMode('stopwatch')}
+                  >
+                    Stopwatch
+                  </Button>
+                  <Button
+                    variant={timerMode === 'scheduled' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => setTimerMode('scheduled')}
+                  >
+                    Scheduled
+                  </Button>
+                </div>
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label
-                  htmlFor="redThreshold"
-                  className="text-right text-red-500"
-                >
-                  Red at (seconds)
-                </Label>
-                <Input
-                  id="redThreshold"
-                  type="number"
-                  value={redThreshold}
-                  onChange={(e) => setRedThreshold(Number(e.target.value))}
-                  className="col-span-3"
-                />
-              </div>
+              {timerMode === 'stopwatch' && (
+                <>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label
+                      htmlFor="yellowThreshold"
+                      className="text-right text-yellow-600"
+                    >
+                      Yellow at (seconds)
+                    </Label>
+                    <Input
+                      id="yellowThreshold"
+                      type="number"
+                      value={yellowThreshold}
+                      onChange={(e) =>
+                        setYellowThreshold(Number(e.target.value))
+                      }
+                      className="col-span-3"
+                    />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label
+                      htmlFor="redThreshold"
+                      className="text-right text-red-500"
+                    >
+                      Red at (seconds)
+                    </Label>
+                    <Input
+                      id="redThreshold"
+                      type="number"
+                      value={redThreshold}
+                      onChange={(e) => setRedThreshold(Number(e.target.value))}
+                      className="col-span-3"
+                    />
+                  </div>
+                </>
+              )}
+              {timerMode === 'scheduled' && (
+                <>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="scheduledStartTime" className="text-right">
+                      Start time
+                    </Label>
+                    <Input
+                      id="scheduledStartTime"
+                      type="time"
+                      value={scheduledStartTime}
+                      onChange={(e) => setScheduledStartTime(e.target.value)}
+                      className="col-span-3"
+                    />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="scheduledEndTime" className="text-right">
+                      End time
+                    </Label>
+                    <Input
+                      id="scheduledEndTime"
+                      type="time"
+                      value={scheduledEndTime}
+                      onChange={(e) => setScheduledEndTime(e.target.value)}
+                      className="col-span-3"
+                    />
+                  </div>
+                  <p
+                    className="text-xs text-muted-foreground text-center"
+                    aria-label="Color thresholds: Green when more than 5 minutes left, Yellow at 5 minutes left, Red at 1 minute left"
+                  >
+                    <span aria-hidden="true">🟢</span> Green →{' '}
+                    <span aria-hidden="true">🟡</span> Yellow at 5 min left →{' '}
+                    <span aria-hidden="true">🔴</span> Red at 1 min left
+                  </p>
+                </>
+              )}
               <div className="text-xs text-center">
                 <p>
                   Built with{' '}
